@@ -1,5 +1,7 @@
+import Plovo from "./containers/Plovo/Plovo.tsx";
+
 const App = () => {
-  return <></>;
+  return <Plovo />;
 };
 
 export default App;
