@@ -3,9 +3,10 @@ import React from "react";
 
 interface Props {
   dish: IDish;
+  onItemClick: (dish: IDish) => void;
 }
 
-const DishItem: React.FC<Props> = ({ dish }) => {
+const DishItem: React.FC<Props> = ({ dish, onItemClick }) => {
   const imageUrl =
     "https://lh6.googleusercontent.com/Bu-pRqU_tWZV7O3rJ5nV1P6NjqFnnAs8kVLC5VGz_Kf7ws0nDUXoGTc7pP87tyUCfu8VyXi0YviIm7CxAISDr2lJSwWwXQxxz98qxVfMcKTJfLPqbcfhn-QEeOowjrlwX1LYDFJN";
 
@@ -14,7 +15,7 @@ const DishItem: React.FC<Props> = ({ dish }) => {
   };
 
   return (
-    <div className="card mb-3 p-4">
+    <div className="card mb-3 p-4" onClick={() => onItemClick(dish)}>
       <div className="row justify-content-between">
         <div className="col-5" style={imageStyle} />
 

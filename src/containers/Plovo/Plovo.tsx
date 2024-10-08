@@ -3,9 +3,10 @@ import DishForm from "../../Components/DishForm/DishForm.tsx";
 import Cart from "../../Components/Cart/Cart.tsx";
 import Dishes from "../../Components/Dishes/Dishes.tsx";
 import { useState } from "react";
-import { IDish } from "../../types";
+import { DishCart, IDish } from '../../types';
 
 const Plovo = () => {
+  const [cart, setCart] = useState<DishCart[]>([])
   const [dishes, setDishes] = useState<IDish[]>([
     {
       id: "1",
@@ -37,6 +38,21 @@ const Plovo = () => {
     setDishes((prevState) => [...prevState, dish]);
   };
 
+  const addDishToCart = (dish: IDish) => {
+    setCart(prevState => {
+      const indexDish = prevState.findIndex(dishCart => dishCart.dish === dish);
+      if (indexDish === -1) {
+        return [...prevState, {dish, amount: 1}];
+      } else {
+        const cartCopy = [...prevState];
+        const copyDishCart = {...cartCopy[indexDish]};
+        copyDishCart.amount++;
+        cartCopy[indexDish] = copyDishCart;
+        return [...cartCopy];
+      }
+    });
+  };
+
   return (
     <>
       <header>
@@ -48,10 +64,10 @@ const Plovo = () => {
             <DishForm addNewDish={addNewDish} />
           </div>
           <div className="col-4 mb-2">
-            <Dishes dishes={dishes} />
+            <Dishes dishes={dishes} addToCart={addDishToCart}/>
           </div>
           <div className="col-4 mb-2">
-            <Cart />
+            <Cart cart={cart}/>
           </div>
         </div>
       </main>
