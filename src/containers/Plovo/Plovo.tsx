@@ -4,9 +4,11 @@ import Cart from "../../Components/Cart/Cart.tsx";
 import Dishes from "../../Components/Dishes/Dishes.tsx";
 import { useState } from "react";
 import { DishCart, IDish } from '../../types';
+import Modal from '../../Components/UI/Modal/Modal.tsx';
 
 const Plovo = () => {
-  const [cart, setCart] = useState<DishCart[]>([])
+  const [cart, setCart] = useState<DishCart[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [dishes, setDishes] = useState<IDish[]>([
     {
       id: "1",
@@ -53,8 +55,15 @@ const Plovo = () => {
     });
   };
 
+  const closeModalWindow = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <>
+      <Modal show={showModal} title="Order" closeModal={closeModalWindow}>
+        <div></div>
+      </Modal>
       <header>
         <ToolBar />
       </header>
@@ -68,6 +77,7 @@ const Plovo = () => {
           </div>
           <div className="col-4 mb-2">
             <Cart cart={cart}/>
+            <button className="btn btn-primary" onClick={() => setShowModal(!showModal)}>Order</button>
           </div>
         </div>
       </main>
